@@ -9,6 +9,8 @@
 #define BINARY_NODE_TREE_
 
 #include <memory>
+#include <algorithm>
+
 #include "BinaryTreeInterface.h"
 #include "BinaryNode.h"
 #include "PrecondViolatedExcep.h"

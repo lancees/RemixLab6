@@ -23,9 +23,11 @@ int main() {
     std::cout << std::endl;
     std::cout << tree4Ptr->contains(5);
     if (tree4Ptr->getParentNodeOf(5) == nullptr) {
-        std::cout << " NULLPTR " << std::endl;
+        std::cout << " 5 has no parent" << std::endl;
     }
-    std::cout << tree4Ptr->getParentNodeOf(6)->getItem();
+    std::cout << "3 has parent of " << tree4Ptr->getParentNodeOf(3)->getItem();
+    std::cout << std::endl;
+    std::cout << "9 has parent of " << tree4Ptr->getParentNodeOf(9)->getItem();
 //    std::cout << tree4Ptr->getParentNodeOf(6)->getItem();
 //    std::cout << tree4Ptr->getRootPtr()->getLeftChildPtr()->getLeftChildPtr()->getItem();
 
