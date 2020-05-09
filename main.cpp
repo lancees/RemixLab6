@@ -29,7 +29,7 @@ int main() {
 //    tree4Ptr->showTree();
 //    tree4Ptr->showTree();
     std::cout << " ******* " << std::endl;
-    tree4Ptr->neoShowTree(tree4Ptr->getRootPtr());
+    tree4Ptr->showTree(tree4Ptr->getRootPtr());
     std::cout << std::endl;
     std::cout << "root " << tree4Ptr->getRootPtr()->getItem() << tree4Ptr->getRootPtr()->getLeftChildPtr()->getItem();
     std::cout << std::endl;
@@ -42,11 +42,11 @@ int main() {
     std::cout << "9 has parent of " << tree4Ptr->getParentNodeOf(9)->getItem();
     std::cout << std::endl;
     tree4Ptr->remove(6);
-    tree4Ptr->neoShowTree(tree4Ptr->getRootPtr());
+    tree4Ptr->showTree(tree4Ptr->getRootPtr());
     std::cout << std::endl;
     std::cout << countNodes(tree4Ptr->getRootPtr(), 0) << std::endl;
     tree4Ptr->removeSmallest();
-    tree4Ptr->neoShowTree(tree4Ptr->getRootPtr());
+    tree4Ptr->showTree(tree4Ptr->getRootPtr());
 //    tree4Ptr->removeNode
 //    auto nineNode = tree4Ptr->findNode(tree4Ptr->getRootPtr(), 9);
 //    std::cout << tree4Ptr->getParentNodeOf(6)->getItem();

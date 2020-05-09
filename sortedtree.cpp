@@ -27,11 +27,11 @@ int main() {
         std::cout << randInt << std::endl;
         bst->add(randInt);
     }
-    bst->neoShowTree(bst->getRootPtr());
+    bst->showTree(bst->getRootPtr());
     std::cout << std::endl;
     std::cout << " (Removing first inserted " << firstInt <<  ")" << std::endl;
     bst->remove(firstInt);
-    bst->neoShowTree(bst->getRootPtr());
+    bst->showTree(bst->getRootPtr());
     std::cout << std::endl;
     bst->inorderTraverse(display);
     return 0;

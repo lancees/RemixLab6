@@ -54,52 +54,44 @@ protected:
                                                    const ItemType& target, std::shared_ptr<BinaryNode<ItemType>> parentPtr) const;
 
 public:
-    //------------------------------------------------------------
-    // Constructor and Destructor Section.
-    //------------------------------------------------------------
-    // inherits from BinaryNodeTree
-
-    //------------------------------------------------------------
-    // Public Methods Section.
-    //------------------------------------------------------------
-//    void setRootData(const ItemType& newData) ;
-    bool add(const ItemType& newEntry) ;
-    bool remove(const ItemType& anEntry) ;
-    ItemType getEntry(const ItemType& anEntry) const;
-    bool contains(const ItemType& anEntry) const;
-
-    void removeSmallest();
-    void neoShowTree(std::shared_ptr<BinaryNode<ItemType>> thisRoot);
-    std::shared_ptr<BinaryNode<ItemType>> getRootPtr() const;
-    std::shared_ptr<BinaryNode<ItemType>> getParentNodeOf(const ItemType& newEntry) const;
     BinarySearchTree(const ItemType& rootItem,
-                   const std::shared_ptr<BinarySearchTree<ItemType>> leftTreePtr,
-                   const std::shared_ptr<BinarySearchTree<ItemType>> rightTreePtr);
+                     const std::shared_ptr<BinarySearchTree<ItemType>> leftTreePtr,
+                     const std::shared_ptr<BinarySearchTree<ItemType>> rightTreePtr);
 
 
     BinarySearchTree(const ItemType &rootItem);
     BinarySearchTree();
 
+//    void setRootData(const ItemType& newData) ;
+    bool add(const ItemType& newEntry) ;
+    bool remove(const ItemType& anEntry) ;
+    ItemType getEntry(const ItemType& anEntry) const;
+    bool contains(const ItemType& anEntry) const;
+    std::shared_ptr<BinaryNode<ItemType>> getRootPtr() const;
+    void removeSmallest();
+    void showTree(std::shared_ptr<BinaryNode<ItemType>> thisRoot);
+    std::shared_ptr<BinaryNode<ItemType>> getParentNodeOf(const ItemType& newEntry) const;
+
+
 
 }; // end BinarySearchTree
 
 // add function implementations below
+template<class ItemType>
+BinarySearchTree<ItemType>::BinarySearchTree() { }
 
 template<class ItemType>
 BinarySearchTree<ItemType>::BinarySearchTree(const ItemType& rootItem,
                                          const std::shared_ptr<BinarySearchTree<ItemType>> leftTreePtr,
                                          const std::shared_ptr<BinarySearchTree<ItemType>> rightTreePtr)
-
-
 {
-
     this->rootPtr = std::make_shared<BinaryNode<ItemType>>(rootItem, this->copyTree(leftTreePtr->rootPtr), this->copyTree(rightTreePtr->rootPtr));
-
-
 }
 
 template<class ItemType>
-BinarySearchTree<ItemType>::BinarySearchTree() { }
+BinarySearchTree<ItemType>::BinarySearchTree(const ItemType &rootItem){
+    this->setRootData(rootItem);
+}
 
 template<class ItemType>
 bool BinarySearchTree<ItemType>::add(const ItemType& newEntry)
@@ -115,12 +107,43 @@ bool BinarySearchTree<ItemType>::add(const ItemType& newEntry)
 }
 
 template<class ItemType>
-void BinarySearchTree<ItemType>::neoShowTree(std::shared_ptr<BinaryNode<ItemType>> thisRoot)
+bool BinarySearchTree<ItemType>::remove(const ItemType &anEntry) {
+    bool f = false;
+    removeValue(getRootPtr(), anEntry, f);
+    return true;
+}
+
+template<class ItemType>
+ItemType BinarySearchTree<ItemType>::getEntry(const ItemType &anEntry) const {
+    auto binaryNodePtr = findNode(this->rootPtr, anEntry);
+
+    if (binaryNodePtr != nullptr)
+        return binaryNodePtr->getItem();
+    else
+        throw NotFoundException("Entry not found in tree!");
+}  // end getEntry
+
+template<class ItemType>
+bool BinarySearchTree<ItemType>::contains(const ItemType &anEntry) const {
+    if (findNode(this->rootPtr, anEntry) != nullptr) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+template<class ItemType>
+std::shared_ptr<BinaryNode<ItemType>> BinarySearchTree<ItemType>::getRootPtr() const {
+    return this->rootPtr;
+}
+
+template<class ItemType>
+void BinarySearchTree<ItemType>::showTree(std::shared_ptr<BinaryNode<ItemType>> thisRoot)
 {
     if (thisRoot != nullptr) {
         std::cout << thisRoot->getItem() << " ";
-        neoShowTree(thisRoot->getLeftChildPtr());
-        neoShowTree(thisRoot->getRightChildPtr());
+        showTree(thisRoot->getLeftChildPtr());
+        showTree(thisRoot->getRightChildPtr());
     }
 }
 
@@ -130,11 +153,6 @@ void BinarySearchTree<ItemType>::removeSmallest()
     int i = 0;
 //    std::cout << "Attempting to remove smallest" << std::endl;
     removeLeftmostNode(this->getRootPtr(), i);
-}
-
-template<class ItemType>
-BinarySearchTree<ItemType>::BinarySearchTree(const ItemType &rootItem){
-    this->setRootData(rootItem);
 }
 
 template<class ItemType>
@@ -158,21 +176,15 @@ BinarySearchTree<ItemType>::placeNode(std::shared_ptr<BinaryNode<ItemType>> subT
             subTreePtr->setRightChildPtr(rightTreePtr);
         }
     }
-
-
     return subTreePtr;
 }
 
-template<class ItemType>
-std::shared_ptr<BinaryNode<ItemType>> BinarySearchTree<ItemType>::getRootPtr() const {
-    return this->rootPtr;
-}
+
 
 template<class ItemType>
 std::shared_ptr<BinaryNode<ItemType>>
 BinarySearchTree<ItemType>::removeValue(std::shared_ptr<BinaryNode<ItemType>> subTreePtr, const ItemType target,
                                         bool &success) {
-
     if(subTreePtr == nullptr) // not found here
         return subTreePtr;
 
@@ -205,7 +217,6 @@ BinarySearchTree<ItemType>::removeNode(std::shared_ptr<BinaryNode<ItemType>> nod
     removeValue(this->getRootPtr(), nodePtr->getItem(), f);
     return nodePtr;
 }
-
 
 template<class ItemType>
 std::shared_ptr<BinaryNode<ItemType>>
@@ -256,35 +267,13 @@ BinarySearchTree<ItemType>::findParentNode(std::shared_ptr<BinaryNode<ItemType>>
 }
 
 template<class ItemType>
-bool BinarySearchTree<ItemType>::contains(const ItemType &anEntry) const {
-    if (findNode(this->rootPtr, anEntry) != nullptr) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-template<class ItemType>
 std::shared_ptr<BinaryNode<ItemType>> BinarySearchTree<ItemType>::getParentNodeOf(const ItemType &anEntry) const {
 //    return std::shared_ptr<BinaryNode<ItemType>>();
     return findParentNode(this->rootPtr, anEntry, nullptr);
 }
 
-template<class ItemType>
-bool BinarySearchTree<ItemType>::remove(const ItemType &anEntry) {
-    bool f = false;
-    removeValue(getRootPtr(), anEntry, f);
-    return true;
-}
 
-template<class ItemType>
-ItemType BinarySearchTree<ItemType>::getEntry(const ItemType &anEntry) const {
-    auto binaryNodePtr = findNode(this->rootPtr, anEntry);
 
-    if (binaryNodePtr != nullptr)
-        return binaryNodePtr->getItem();
-    else
-        throw NotFoundException("Entry not found in tree!");
-}  // end getEntry
+
 
 #endif //REMIXLAB6_BINARYSEARCHTREE_H
