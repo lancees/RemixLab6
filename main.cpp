@@ -13,7 +13,14 @@ int main() {
    std::cout << std::endl;
 //    BinarySearchTree<int> * tree = new BinarySearchTree<int>(5);
     tree4Ptr->add(9);
+    tree4Ptr->add(1);
 //    tree4Ptr->showTree();
     tree4Ptr->showTree();
+    std::cout << " ******* " << std::endl;
+    tree4Ptr->neoShowTree(tree4Ptr->getRootPtr());
+    std::cout << std::endl;
+    std::cout << "root " << tree4Ptr->getRootPtr()->getItem() << tree4Ptr->getRootPtr()->getLeftChildPtr()->getItem();
+//    std::cout << tree4Ptr->getRootPtr()->getLeftChildPtr()->getLeftChildPtr()->getItem();
+
     return 0;
 }

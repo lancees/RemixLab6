@@ -66,6 +66,7 @@ public:
 //    bool contains(const ItemType& anEntry) const;
     void showTree();
     void neoShowTree(std::shared_ptr<BinaryNode<ItemType>> thisRoot);
+    std::shared_ptr<BinaryNode<ItemType>> getRootPtr() const;
 
     BinarySearchTree(const ItemType& rootItem,
                    const std::shared_ptr<BinarySearchTree<ItemType>> leftTreePtr,
@@ -121,8 +122,10 @@ void BinarySearchTree<ItemType>::showTree()
 template<class ItemType>
 void BinarySearchTree<ItemType>::neoShowTree(std::shared_ptr<BinaryNode<ItemType>> thisRoot)
 {
-    while (this->rootPtr != nullptr) {
-
+    if (thisRoot != nullptr) {
+        std::cout << thisRoot->getItem();
+        neoShowTree(thisRoot->getLeftChildPtr());
+        neoShowTree(thisRoot->getRightChildPtr());
     }
 }
 
@@ -157,6 +160,11 @@ BinarySearchTree<ItemType>::placeNode(std::shared_ptr<BinaryNode<ItemType>> subT
 
 
     return subTreePtr;
+}
+
+template<class ItemType>
+std::shared_ptr<BinaryNode<ItemType>> BinarySearchTree<ItemType>::getRootPtr() const {
+    return this->rootPtr;
 }
 // end constructor
 
