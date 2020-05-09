@@ -11,6 +11,7 @@
 #include <memory>
 #include <algorithm>
 
+
 #include "BinaryTreeInterface.h"
 #include "BinaryNode.h"
 #include "PrecondViolatedExcep.h"
@@ -421,14 +422,15 @@ bool BinaryNodeTree<ItemType>::remove(const ItemType& target)
 template<class ItemType>
 ItemType BinaryNodeTree<ItemType>::getEntry(const ItemType& anEntry) const
 {
+
     bool isSuccessful = false;
     auto binaryNodePtr = findNode(rootPtr, anEntry, isSuccessful);
-    
+
     if (isSuccessful)
         return binaryNodePtr->getItem();
-        else
-            throw NotFoundException("Entry not found in tree!");
-            }  // end getEntry
+    else
+        throw NotFoundException("Entry not found in tree!");
+}  // end getEntry
 
 template<class ItemType>
 bool BinaryNodeTree<ItemType>:: contains(const ItemType& anEntry) const
