@@ -214,7 +214,7 @@ BinarySearchTree<ItemType>::findNode(std::shared_ptr<BinaryNode<ItemType>> treeP
 template<class ItemType>
 std::shared_ptr<BinaryNode<ItemType>>
 BinarySearchTree<ItemType>::findParentNode(std::shared_ptr<BinaryNode<ItemType>> treePtr, const ItemType &target, std::shared_ptr<BinaryNode<ItemType>> parentPtr) const {
-    if (treePtr == nullptr) {
+    if (treePtr == nullptr || treePtr->getItem() == getRootPtr()->getItem()) {
         return nullptr;
     } else {
         if (treePtr->getItem() == target) {
