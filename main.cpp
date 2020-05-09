@@ -20,6 +20,8 @@ int main() {
     tree4Ptr->neoShowTree(tree4Ptr->getRootPtr());
     std::cout << std::endl;
     std::cout << "root " << tree4Ptr->getRootPtr()->getItem() << tree4Ptr->getRootPtr()->getLeftChildPtr()->getItem();
+    std::cout << std::endl;
+    std::cout << tree4Ptr->contains(5);
 //    std::cout << tree4Ptr->getRootPtr()->getLeftChildPtr()->getLeftChildPtr()->getItem();
 
     return 0;
