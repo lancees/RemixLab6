@@ -22,6 +22,8 @@ int main() {
     std::cout << "root " << tree4Ptr->getRootPtr()->getItem() << tree4Ptr->getRootPtr()->getLeftChildPtr()->getItem();
     std::cout << std::endl;
     std::cout << tree4Ptr->contains(5);
+    std::cout << tree4Ptr->getParentNodeOf(5)->getItem();
+//    std::cout << tree4Ptr->getParentNodeOf(6)->getItem();
 //    std::cout << tree4Ptr->getRootPtr()->getLeftChildPtr()->getLeftChildPtr()->getItem();
 
     return 0;
