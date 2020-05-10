@@ -228,6 +228,7 @@ BinarySearchTree<ItemType>::removeLeftmostNode(std::shared_ptr<BinaryNode<ItemTy
         subTreePtr = subTreePtr->getLeftChildPtr();
     }
     inorderSuccessor = thisTreePtr->getItem();
+    std::cout << " (removing left most node " << thisTreePtr->getItem() << " )" << std::endl;
     removeNode(thisTreePtr);
     return thisTreePtr;
 }
