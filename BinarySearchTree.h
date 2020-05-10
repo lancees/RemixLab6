@@ -190,7 +190,7 @@ BinarySearchTree<ItemType>::removeValue(std::shared_ptr<BinaryNode<ItemType>> su
 
     if (subTreePtr->getItem() == target) // found it
     {
-        subTreePtr = moveValuesUpTree(subTreePtr);
+        subTreePtr = this->moveValuesUpTree(subTreePtr);
         success = true;
         return subTreePtr;
     }
