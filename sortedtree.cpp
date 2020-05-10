@@ -34,7 +34,6 @@ int main() {
 
 //        int randInt = distribution(generator);
         int randInt = mylist.front();
-//        std::cout << randInt << std::endl;
         mylist.pop_front();
         if (i == 1) {
             firstInt = randInt;
@@ -43,6 +42,8 @@ int main() {
         bst->add(randInt);
     }
     bst->showTree(bst->getRootPtr());
+    std::cout << std::endl;
+    bst->inorderTraverse(display);
     std::cout << std::endl;
     std::cout << " (Removing first inserted " << firstInt <<  ")" << std::endl;
     bst->remove(firstInt);
