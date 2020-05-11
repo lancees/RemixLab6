@@ -203,6 +203,7 @@ BinarySearchTree<ItemType>::removeValue(std::shared_ptr<BinaryNode<ItemType>> su
             removeValue(subTreePtr, targetNode->getItem());
         }
     }
+//    return subTreePtr;
 }
 
 template<class ItemType>
@@ -219,50 +220,13 @@ BinarySearchTree<ItemType>::removeNode(std::shared_ptr<BinaryNode<ItemType>> nod
         if (rightNode->isLeaf()) {
             nodePtr->setRightChildPtr(nullptr);
         }
-        removeNode(rightNode);
+        nodePtr = removeNode(rightNode);
     } else if (leftNode != nullptr) {
         nodePtr->setItem(leftNode->getItem());
         if (leftNode->isLeaf()) {
             nodePtr->setLeftChildPtr(nullptr);
         }
-        removeNode(leftNode);
-    }
-    return nodePtr;
-//    std::shared_ptr<BinaryNode<ItemType>> newNode;
-    if (nodePtr == this->getRootPtr()) {
-//        auto leftNode = nodePtr->getLeftChildPtr();
-//        auto rightNode = nodePtr->getRightChildPtr();
-//        if (rightNode != nullptr) {
-//            newNode = std::make_shared<BinaryNode<ItemType>>(rightNode->getItem(), nodePtr->getLeftChildPtr(),
-//                    rightNode->getRightChildPtr());
-//            this->rootPtr = newNode;
-//            removeNode(rightNode);
-//        } else if (leftNode != nullptr) {
-////            newNode->setItem(leftNode->getItem());
-////            newNode->setLeftChildPtr(leftNode->getLeftChildPtr());
-////            newNode->setRightChildPtr(leftNode->getRightChildPtr());
-////            this->rootPtr = newNode;
-////            removeNode(leftNode);
-//        }
-    }
-    else if (nodePtr != nullptr) {
-        std::cout <<" Trying to remove a subright node " << nodePtr->getItem() <<  std::endl;
-
-        auto parentNode = findParentNode(this->getRootPtr(), nodePtr->getItem(), nullptr);
-        auto leftNode = nodePtr->getLeftChildPtr();
-        auto rightNode = nodePtr->getRightChildPtr();
-
-        if (rightNode != nullptr) {
-//            newNode = std::make_shared<BinaryNode<ItemType>>(rightNode->getItem(), nodePtr->getLeftChildPtr(),
-//                                                             rightNode->getRightChildPtr());
-//            this->rootPtr = newNode;
-//            removeNode(rightNode);
-        } else {
-//            newNode->setItem(leftNode->getItem());
-//            newNode->setLeftChildPtr(leftNode->getLeftChildPtr());
-//            newNode->setRightChildPtr(leftNode->getRightChildPtr());
-//            removeNode(leftNode);
-        }
+        nodePtr = removeNode(leftNode);
     }
     return nodePtr;
 }

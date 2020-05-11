@@ -21,15 +21,14 @@ int main() {
     int firstInt;
     auto bst = std::make_shared<BinarySearchTree<int>>();
 //    std::list<int> mylist;
-//    mylist.push_back(92);
-//    mylist.push_back(59);
-//    mylist.push_back(8);
+//    mylist.push_back(11);
 //    mylist.push_back(12);
-//    mylist.push_back(17);
-//    mylist.push_back(99);
-//    mylist.push_back(41);
-//    mylist.push_back(72);
-//    mylist.push_back(76);
+//    mylist.push_back(16);
+//    mylist.push_back(22);
+//    mylist.push_back(23);
+//    mylist.push_back(26);
+//    mylist.push_back(35);
+//    mylist.push_back(36);
     for (int i = 1; i <= 21; i++) {
 
         int randInt = distribution(generator);
@@ -48,7 +47,7 @@ int main() {
     std::cout << std::endl;
     std::cout << " (Removing first inserted " << firstInt <<  ")" << std::endl;
     bst->remove(firstInt);
-    bst->removeSmallest();
+//    bst->removeSmallest();
     bst->inorderTraverse(display);
 //    bst->showTree(bst->getRootPtr());
 //    std::cout << std::endl;
