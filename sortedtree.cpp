@@ -26,14 +26,16 @@ int main() {
     mylist.push_back(8);
     mylist.push_back(12);
     mylist.push_back(17);
-    mylist.push_back(12);
+    mylist.push_back(99);
     mylist.push_back(41);
     mylist.push_back(72);
     mylist.push_back(76);
+    std::cout << "size " << mylist.size() << std::endl;
     for (int i = 1; i <= 9; i++) {
 
 //        int randInt = distribution(generator);
         int randInt = mylist.front();
+        std::cout << "-- " << randInt << std::endl;
         mylist.pop_front();
         if (i == 1) {
             firstInt = randInt;
@@ -47,10 +49,12 @@ int main() {
     std::cout << std::endl;
     std::cout << " (Removing first inserted " << firstInt <<  ")" << std::endl;
     bst->remove(firstInt);
-    bst->showTree(bst->getRootPtr());
-    std::cout << std::endl;
-    bst->inorderTraverse(display);
     bst->removeSmallest();
-    bst->showTree(bst->getRootPtr());
+    bst->inorderTraverse(display);
+//    bst->showTree(bst->getRootPtr());
+//    std::cout << std::endl;
+//    bst->inorderTraverse(display);
+//    bst->removeSmallest();
+//    bst->showTree(bst->getRootPtr());
     return 0;
 }

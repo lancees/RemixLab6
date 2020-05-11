@@ -109,7 +109,10 @@ bool BinarySearchTree<ItemType>::add(const ItemType& newEntry)
 template<class ItemType>
 bool BinarySearchTree<ItemType>::remove(const ItemType &anEntry) {
     bool f = false;
-    removeValue(getRootPtr(), anEntry, f);
+//    removeValue(getRootPtr(), anEntry, f);
+    auto node = findNode(this->getRootPtr(), anEntry);
+    std::cout << " Removing Node with entry " << anEntry << std::endl;
+    removeNode(node);
     return true;
 }
 
@@ -141,10 +144,15 @@ template<class ItemType>
 void BinarySearchTree<ItemType>::showTree(std::shared_ptr<BinaryNode<ItemType>> thisRoot)
 {
     if (thisRoot != nullptr) {
-        std::cout << thisRoot->getItem() << " ";
+//        std::cout << thisRoot->getItem() << " ";
+//        showTree(thisRoot->getLeftChildPtr());
+//        showTree(thisRoot->getRightChildPtr());
+
         showTree(thisRoot->getLeftChildPtr());
+        std::cout << thisRoot->getItem() << " ";
         showTree(thisRoot->getRightChildPtr());
     }
+
 }
 
 template<class ItemType>
@@ -213,8 +221,62 @@ BinarySearchTree<ItemType>::removeValue(std::shared_ptr<BinaryNode<ItemType>> su
 template<class ItemType>
 std::shared_ptr<BinaryNode<ItemType>>
 BinarySearchTree<ItemType>::removeNode(std::shared_ptr<BinaryNode<ItemType>> nodePtr) {
-    bool f = false;
-    removeValue(this->getRootPtr(), nodePtr->getItem(), f);
+    // move bubble down and then delete
+    auto leftNode = nodePtr->getLeftChildPtr();
+    auto rightNode = nodePtr->getRightChildPtr();
+
+    if (rightNode == nullptr && leftNode == nullptr) {
+        return nodePtr;
+    } else if (rightNode != nullptr) {
+        nodePtr->setItem(rightNode->getItem());
+        if (rightNode->isLeaf()) {
+            nodePtr->setRightChildPtr(nullptr);
+        }
+        removeNode(rightNode);
+    } else if (leftNode != nullptr) {
+        nodePtr->setItem(leftNode->getItem());
+        if (leftNode->isLeaf()) {
+            nodePtr->setLeftChildPtr(nullptr);
+        }
+        removeNode(leftNode);
+    }
+    return nodePtr;
+//    std::shared_ptr<BinaryNode<ItemType>> newNode;
+    if (nodePtr == this->getRootPtr()) {
+//        auto leftNode = nodePtr->getLeftChildPtr();
+//        auto rightNode = nodePtr->getRightChildPtr();
+//        if (rightNode != nullptr) {
+//            newNode = std::make_shared<BinaryNode<ItemType>>(rightNode->getItem(), nodePtr->getLeftChildPtr(),
+//                    rightNode->getRightChildPtr());
+//            this->rootPtr = newNode;
+//            removeNode(rightNode);
+//        } else if (leftNode != nullptr) {
+////            newNode->setItem(leftNode->getItem());
+////            newNode->setLeftChildPtr(leftNode->getLeftChildPtr());
+////            newNode->setRightChildPtr(leftNode->getRightChildPtr());
+////            this->rootPtr = newNode;
+////            removeNode(leftNode);
+//        }
+    }
+    else if (nodePtr != nullptr) {
+        std::cout <<" Trying to remove a subright node " << nodePtr->getItem() <<  std::endl;
+
+        auto parentNode = findParentNode(this->getRootPtr(), nodePtr->getItem(), nullptr);
+        auto leftNode = nodePtr->getLeftChildPtr();
+        auto rightNode = nodePtr->getRightChildPtr();
+
+        if (rightNode != nullptr) {
+//            newNode = std::make_shared<BinaryNode<ItemType>>(rightNode->getItem(), nodePtr->getLeftChildPtr(),
+//                                                             rightNode->getRightChildPtr());
+//            this->rootPtr = newNode;
+//            removeNode(rightNode);
+        } else {
+//            newNode->setItem(leftNode->getItem());
+//            newNode->setLeftChildPtr(leftNode->getLeftChildPtr());
+//            newNode->setRightChildPtr(leftNode->getRightChildPtr());
+//            removeNode(leftNode);
+        }
+    }
     return nodePtr;
 }
 
