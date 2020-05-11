@@ -193,29 +193,16 @@ template<class ItemType>
 std::shared_ptr<BinaryNode<ItemType>>
 BinarySearchTree<ItemType>::removeValue(std::shared_ptr<BinaryNode<ItemType>> subTreePtr, const ItemType target,
                                         bool &success) {
-    if(subTreePtr == nullptr) // not found here
-        return subTreePtr;
 
-    if (subTreePtr->getItem() == target) // found it
-    {
-        subTreePtr = this->moveValuesUpTree(subTreePtr);
-        success = true;
+    if (subTreePtr == nullptr) {
         return subTreePtr;
+    } else {
+        auto targetNode = findNode(subTreePtr, target);
+        subTreePtr = removeNode(targetNode);
+        if (targetNode != nullptr) {
+            removeValue(subTreePtr, targetNode->getItem());
+        }
     }
-    else
-    {
-        auto targetNodePtr = removeValue(subTreePtr->getLeftChildPtr(), target, success);
-        subTreePtr->setLeftChildPtr(targetNodePtr);
-        if (!success) // no need to search right subTree
-        {
-            targetNodePtr = removeValue(subTreePtr->getRightChildPtr(), target, success);
-            subTreePtr->setRightChildPtr(targetNodePtr);
-        }  // end if
-
-        return subTreePtr;
-    }  // end if
-
-    return std::shared_ptr<BinaryNode<ItemType>>();
 }
 
 template<class ItemType>

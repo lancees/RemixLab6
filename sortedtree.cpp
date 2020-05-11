@@ -20,23 +20,22 @@ int main() {
     std::cout << " (Generating 21 random ints between 1 and 100)" << std::endl;
     int firstInt;
     auto bst = std::make_shared<BinarySearchTree<int>>();
-    std::list<int> mylist;
-    mylist.push_back(92);
-    mylist.push_back(59);
-    mylist.push_back(8);
-    mylist.push_back(12);
-    mylist.push_back(17);
-    mylist.push_back(99);
-    mylist.push_back(41);
-    mylist.push_back(72);
-    mylist.push_back(76);
-    std::cout << "size " << mylist.size() << std::endl;
-    for (int i = 1; i <= 9; i++) {
+//    std::list<int> mylist;
+//    mylist.push_back(92);
+//    mylist.push_back(59);
+//    mylist.push_back(8);
+//    mylist.push_back(12);
+//    mylist.push_back(17);
+//    mylist.push_back(99);
+//    mylist.push_back(41);
+//    mylist.push_back(72);
+//    mylist.push_back(76);
+    for (int i = 1; i <= 21; i++) {
 
-//        int randInt = distribution(generator);
-        int randInt = mylist.front();
-        std::cout << "-- " << randInt << std::endl;
-        mylist.pop_front();
+        int randInt = distribution(generator);
+//        int randInt = mylist.front();
+//        std::cout << "-- " << randInt << std::endl;
+//        mylist.pop_front();
         if (i == 1) {
             firstInt = randInt;
         }
