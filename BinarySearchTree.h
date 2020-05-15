@@ -186,65 +186,58 @@ BinarySearchTree<ItemType>::placeNode(std::shared_ptr<BinaryNode<ItemType>> subT
     }
     return subTreePtr;
 }
-
-
-
 template<class ItemType>
-std::shared_ptr<BinaryNode<ItemType>>
-BinarySearchTree<ItemType>::removeValue(std::shared_ptr<BinaryNode<ItemType>> subTreePtr, const ItemType target,
-                                        bool &success) {
+std::shared_ptr<BinaryNode<ItemType>> BinarySearchTree<ItemType>::removeValue(std::shared_ptr<BinaryNode<ItemType>> subTreePtr, const ItemType target, bool& success)
+{
+    if ( subTreePtr == nullptr ) {
+        success = false;
+    } else if ( subTreePtr->getItem() == target ) {
+        subTreePtr = removeNode(subTreePtr);
+        success = true;
 
-    if (subTreePtr == nullptr) {
         return subTreePtr;
     } else {
-        auto targetNode = findNode(subTreePtr, target);
-        subTreePtr = removeNode(targetNode);
-        if (targetNode != nullptr) {
-            removeValue(subTreePtr, targetNode->getItem());
+        if ( subTreePtr->getItem() > target ) {
+            subTreePtr->setLeftChildPtr( removeValue( subTreePtr->getLeftChildPtr(), target, success) );
+        } else {
+            subTreePtr->setRightChildPtr( removeValue( subTreePtr->getRightChildPtr(), target, success));
         }
     }
-//    return subTreePtr;
+    return subTreePtr;
 }
-
 template<class ItemType>
-std::shared_ptr<BinaryNode<ItemType>>
-BinarySearchTree<ItemType>::removeNode(std::shared_ptr<BinaryNode<ItemType>> nodePtr) {
-    // move bubble down and then delete
-    auto leftNode = nodePtr->getLeftChildPtr();
-    auto rightNode = nodePtr->getRightChildPtr();
-
-    if (rightNode == nullptr && leftNode == nullptr) {
+std::shared_ptr<BinaryNode<ItemType>> BinarySearchTree<ItemType>::removeNode(std::shared_ptr<BinaryNode<ItemType>> nodePtr)
+{
+    auto leftChild = nodePtr->getLeftChildPtr();
+    auto rightChild = nodePtr->getRightChildPtr();
+    auto nodeToConnect = std::shared_ptr<BinaryNode<ItemType>>();
+    if (leftChild == nullptr && rightChild == nullptr) { // leaf
         return nodePtr;
-    } else if (rightNode != nullptr) {
-        nodePtr->setItem(rightNode->getItem());
-        if (rightNode->isLeaf()) {
-            nodePtr->setRightChildPtr(nullptr);
-        }
-        nodePtr = removeNode(rightNode);
-    } else if (leftNode != nullptr) {
-        nodePtr->setItem(leftNode->getItem());
-        if (leftNode->isLeaf()) {
-            nodePtr->setLeftChildPtr(nullptr);
-        }
-        nodePtr = removeNode(leftNode);
+    } else if (nodePtr->getLeftChildPtr() == nullptr) {
+        return rightChild;
+    } else if (nodePtr->getRightChildPtr() == nullptr) {
+        return leftChild;
+    } else { // two children
+        ItemType newNodeValue;
+        auto tempNode = removeLeftmostNode( nodePtr->getRightChildPtr(), newNodeValue);
+        nodePtr->setRightChildPtr(tempNode); // set right pointer to next successor (left most of right subtree)
+        nodePtr->setItem(tempNode->getItem());
+        return nodePtr;
     }
-    return nodePtr;
 }
 
+
 template<class ItemType>
-std::shared_ptr<BinaryNode<ItemType>>
-BinarySearchTree<ItemType>::removeLeftmostNode(std::shared_ptr<BinaryNode<ItemType>> subTreePtr,
-                                               ItemType &inorderSuccessor) {
-    auto thisTreePtr = subTreePtr;
-    while (subTreePtr != nullptr) {
-        thisTreePtr = subTreePtr;
-        subTreePtr = subTreePtr->getLeftChildPtr();
+std::shared_ptr<BinaryNode<ItemType>> BinarySearchTree<ItemType>::removeLeftmostNode(std::shared_ptr<BinaryNode<ItemType>> subTreePtr, ItemType& inorderSuccessor)
+{
+    if (subTreePtr->getLeftChildPtr() == nullptr) {
+        inorderSuccessor = subTreePtr->getItem();
+        return removeNode(subTreePtr);
+    } else {
+        subTreePtr->setLeftChildPtr( removeLeftmostNode( subTreePtr->getLeftChildPtr(), inorderSuccessor));
+        return subTreePtr;
     }
-    inorderSuccessor = thisTreePtr->getItem();
-    std::cout << " (removing left most node " << thisTreePtr->getItem() << " )" << std::endl;
-    removeNode(thisTreePtr);
-    return thisTreePtr;
-}
+} // e
 
 template<class ItemType>
 std::shared_ptr<BinaryNode<ItemType>>
