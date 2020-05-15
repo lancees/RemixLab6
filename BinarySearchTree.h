@@ -219,9 +219,9 @@ std::shared_ptr<BinaryNode<ItemType>> BinarySearchTree<ItemType>::removeNode(std
         return leftChild;
     } else { // two children
         ItemType newNodeValue;
-        auto tempNode = removeLeftmostNode( nodePtr->getRightChildPtr(), newNodeValue);
-        nodePtr->setRightChildPtr(tempNode); // set right pointer to next successor (left most of right subtree)
-        nodePtr->setItem(tempNode->getItem());
+        nodePtr->setRightChildPtr( removeLeftmostNode( nodePtr->getRightChildPtr(), newNodeValue)); //Place at root.
+        nodePtr->setItem(newNodeValue);
+
         return nodePtr;
     }
 }
